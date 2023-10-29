@@ -1,6 +1,4 @@
 ---
-import { MenuContextWrapper } from '@src/client/MenuContextWrapper'
-
 import '@fontsource/poppins/200.css'
 import '@fontsource/poppins/300.css'
 import '@fontsource/poppins/400.css'
@@ -22,6 +20,20 @@ const { title } = Astro.props
   <head>
     <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
     <meta charset='UTF-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1' />
+    <meta
+      name='description'
+      content='Desenvolvedor Front-end com vasta experiência em projetos e
+      aplicações. Como Web Apps SPAs, PWAs e SSRs. Atuo como prestador de
+      serviços e freelancer.'
+    />
+    <meta name='application-name' content='Front-end developer portfolio' />
+    <meta name='author' content='Rogério Ferreira' />
+    <meta
+      name='keywords'
+      content='desenvolvedor,developer,desenvolvimento,programador,engenheiro de software,software engineer,front-end,frontend,web,web applications,web app,aplicação web,website,sites,portfolio,portfólio,freelancer,freela,rogério ferreira'
+    />
+    <meta name='robots' content='index,nofollow' />
     <meta name='generator' content={Astro.generator} />
     <title>{title}</title>
     <script async src='https://www.googletagmanager.com/gtag/js?id=G-BFGEZG5DT9'
@@ -33,7 +45,11 @@ const { title } = Astro.props
     </style>
   </head>
 
-  <body class='antialiased bg-white'>
+  <body
+    class='antialiased bg-white'
+    itemscope
+    itemtype='https://schema.org/WebPage'
+  >
     <slot />
   </body>
 
