@@ -1,0 +1,27 @@
+---
+import type { ImageMetadata } from 'astro'
+import { Image } from 'astro:assets'
+
+export interface SkillItemProps {
+  src: ImageMetadata
+  name: string
+}
+
+type Props = SkillItemProps
+
+const { src, name } = Astro.props
+---
+
+<li class='flex flex-col items-center'>
+  <Image
+    class='xs:w-25 xs:h-25 w-14 h-14'
+    src={src}
+    alt={`${name} logo`}
+    width='100'
+    height='100'
+    quality='100'
+  />
+  <span class='xs:text-sm text-xs mt-1 text-gray-700 font-semibold'>
+    {name}
+  </span>
+</li>

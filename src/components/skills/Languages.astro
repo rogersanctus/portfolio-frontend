@@ -1,0 +1,31 @@
+---
+import SkillList from './SkillList.astro'
+
+import JavascriptOriginal from '@src/icons/javascript-original.svg'
+import TypescriptOriginal from '@src/icons/typescript-original.svg'
+import ElixirOriginal from '@src/icons/elixir-original.svg'
+import PhpPlain from '@src/icons/php-plain.svg'
+import JavaOriginal from '@src/icons/java-original.svg'
+import PythonOriginal from '@src/icons/python-original.svg'
+import CplusplusOriginal from '@src/icons/cplusplus-original.svg'
+import LuaOriginal from '@src/icons/lua-original.svg'
+---
+
+<article class='text-center'>
+  <h3 class='xxs:text-2xl text-lg text-orange-500'>Linguagens</h3>
+  {
+    /** From the ul list above take the url and name of each SkillItem and add them all as skills property of a SkillList element */
+  }
+  <SkillList
+    skills={[
+      { src: JavascriptOriginal, name: 'Javascript' },
+      { src: TypescriptOriginal, name: 'Typescript' },
+      { src: ElixirOriginal, name: 'Elixir' },
+      { src: PhpPlain, name: 'Php' },
+      { src: JavaOriginal, name: 'Java' },
+      { src: PythonOriginal, name: 'Python' },
+      { src: CplusplusOriginal, name: 'C/C++' },
+      { src: LuaOriginal, name: 'Lua' }
+    ]}
+  />
+</article>

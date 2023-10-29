@@ -1,0 +1,18 @@
+---
+import SkillList from './SkillList.astro'
+
+import GitOriginal from '@src/icons/git-original.svg'
+import DockerOriginal from '@src/icons/docker-original.svg'
+import JenkinsOriginal from '@src/icons/jenkins-original.svg'
+---
+
+<article class='mt-4 text-center'>
+  <h3 class='xxs:text-2xl text-lg text-orange-500'>Ferramentas</h3>
+  <SkillList
+    skills={[
+      { src: GitOriginal, name: 'Git' },
+      { src: DockerOriginal, name: 'Docker' },
+      { src: JenkinsOriginal, name: 'Jenkins (CI/CD)' }
+    ]}
+  />
+</article>

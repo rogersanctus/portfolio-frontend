@@ -1,0 +1,19 @@
+---
+import SkillList from './SkillList.astro'
+import VuejsOriginal from '@src/icons/vuejs-original.svg'
+import React from '@src/icons/react-original.svg'
+import AngularjsOriginal from '@src/icons/angularjs-original.svg'
+import Phoenix from '@src/icons/phoenix-original.svg'
+---
+
+<article class='text-center'>
+  <h3 class='xxs:text-2xl text-lg text-orange-500'>Frameworks</h3>
+  <SkillList
+    skills={[
+      { src: VuejsOriginal, name: 'VueJS' },
+      { src: React, name: 'React' },
+      { src: AngularjsOriginal, name: 'AngularJS' },
+      { src: Phoenix, name: 'Phoenix' }
+    ]}
+  />
+</article>

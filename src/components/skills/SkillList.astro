@@ -1,0 +1,15 @@
+---
+import SkillItem, { type SkillItemProps } from './SkillItem.astro'
+
+interface Props {
+  skills: SkillItemProps[]
+}
+
+const { skills } = Astro.props
+---
+
+<div class='flex items-center py-10 mt-5 relative'>
+  <ul class='flex flex-wrap flex-grow justify-center text-sm mx-20 gap-5 z-10'>
+    {skills.flatMap((skill) => <SkillItem src={skill.src} name={skill.name} />)}
+  </ul>
+</div>

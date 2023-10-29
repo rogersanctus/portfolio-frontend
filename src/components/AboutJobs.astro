@@ -1,0 +1,39 @@
+---
+import SectionCard from './SectionCard.astro'
+---
+
+<SectionCard section_id='about_jobs' title='Que tipo de aplicações desenvolvo'>
+  <ul
+    class='list-inside list-disc mt-10 xs:text-xl text-md text-gray-900 font-poppins'
+    itemscope
+    itemtype='https://schema.org/Service'
+  >
+    <li class='cursor-pointer' itemprop='description'>Aplicações SSR</li>
+    <li class='cursor-pointer' itemprop='description'>Aplicações PWA</li>
+    <li class='cursor-pointer' itemprop='description'>Landing Pages</li>
+    <li class='cursor-pointer' itemprop='description'>Aplicações SPA</li>
+    <li class='cursor-pointer' itemprop='description'>E-commerces</li>
+    <li class='cursor-pointer' itemprop='description'>Blogs</li>
+    <li class='cursor-pointer' itemprop='description'>
+      Aplicações desktop com Electron
+    </li>
+  </ul>
+  <div class='mt-14'>
+    <h3 class='xs:text-2xl text-lg uppercase text-gray-700'>
+      O que você pode esperar?
+    </h3>
+    <ul
+      class='mt-10 list-inside list-disc text-gray-900 xs:text-xl text-md'
+      itemscope
+      itemtype='https://schema.org/Action'
+    >
+      <li itemprop='result'>Transforme sua ideia em um produto!</li>
+      <li itemprop='result'>
+        Dê manutenção e faça melhorias em sua aplicação.
+      </li>
+      <li itemprop='result'>
+        Ou traga-a para Web/Mobile com responsividade e acessibilidade.
+      </li>
+    </ul>
+  </div>
+</SectionCard>

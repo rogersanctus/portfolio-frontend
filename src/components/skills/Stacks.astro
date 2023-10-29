@@ -1,0 +1,89 @@
+---
+import SkillList from './SkillList.astro'
+import Html5Original from '@src/icons/html5-original.svg'
+import Css3Original from '@src/icons/css3-original.svg'
+import SassOriginal from '@src/icons/sass-original.svg'
+import LessOriginal from '@src/icons/less-plain-wordmark.svg'
+import TailwindcssOriginal from '@src/icons/tailwindcss-plain.svg'
+import AxiosLogo from '@src/icons/axios-logo.png'
+import JestPlain from '@src/icons/jest-plain.svg'
+import TestingLibraryLogo from '@src/icons/testing-library-logo.png'
+import EslintLogo from '@src/icons/eslint-logo.svg'
+import WebpackOriginal from '@src/icons/webpack-original.svg'
+import RollupLogo from '@src/icons/rollup-logo.svg'
+import NuxtLogo from '@src/icons/nuxt.svg'
+import ViteLogo from '@src/icons/vite-logo.svg'
+import VuejsOriginal from '@src/icons/vuejs-original.svg'
+import PiniaLogo from '@src/icons/pinia-logo.svg'
+import VuetifyLogo from '@src/icons/vuetify-original.svg'
+import QuasarLogo from '@src/icons/quasar-logo.svg'
+import BootstrapVue from '@src/icons/bootstrap-vue.svg'
+import BootstrapOriginal from '@src/icons/bootstrap-original.svg'
+import NextjsOriginal from '@src/icons/nextjs-original.svg'
+import ReactRouterMarkColor from '@src/icons/react-router-mark-color.svg'
+import ReactOriginal from '@src/icons/react-original.svg'
+import ZustandLogo from '@src/icons/zustand-logo.png'
+import ReduxLogo from '@src/icons/redux-logo.svg'
+import ZodLogo from '@src/icons/zod-logo.svg'
+---
+
+<article class='text-center'>
+  <h3 class='xxs:text-2xl text-lg text-orange-500'>Stacks Frontend</h3>
+  <ul>
+    <li class='mt-8'>
+      <h4 class='xxs:text-xl text-md text-red-500 font-semibold'>Uso Geral</h4>
+      <SkillList
+        skills={[
+          { src: Html5Original, name: 'HTML 5' },
+          { src: Css3Original, name: 'CSS 3' },
+          { src: SassOriginal, name: 'Sass' },
+          { src: LessOriginal, name: 'Less' },
+          { src: TailwindcssOriginal, name: 'Tailwind CSS' },
+          { src: AxiosLogo, name: 'Axios' },
+          { src: JestPlain, name: 'Jest' },
+          {
+            src: TestingLibraryLogo,
+            name: 'Testing Library'
+          },
+          { src: EslintLogo, name: 'ESLint' },
+          { src: WebpackOriginal, name: 'Webpack' },
+          { src: RollupLogo, name: 'RollupJS' }
+        ]}
+      />
+    </li>
+    <li class='mt-8'>
+      <h4 class='xxs:text-xl text-md text-red-500 font-semibold'>VueJS</h4>
+      <SkillList
+        skills={[
+          { src: NuxtLogo, name: 'Nuxt' },
+          { src: ViteLogo, name: 'Vite' },
+          { src: VuejsOriginal, name: 'Vue Router' },
+          { src: VuejsOriginal, name: 'Vuex' },
+          { src: PiniaLogo, name: 'Pinia' },
+          { src: VuetifyLogo, name: 'Vuetify' },
+          { src: QuasarLogo, name: 'Quasar' },
+          { src: BootstrapVue, name: 'Bootstrap Vue' },
+          { src: BootstrapOriginal, name: 'Bootstrap' }
+        ]}
+      />
+    </li>
+    <li class='mt-8'>
+      <h4 class='xxs:text-xl text-md text-red-500 font-semibold'>React</h4>
+      <SkillList
+        skills={[
+          { src: NextjsOriginal, name: 'Next' },
+          { src: ViteLogo, name: 'Vite' },
+          {
+            src: ReactRouterMarkColor,
+            name: 'React Router'
+          },
+          { src: ReactOriginal, name: 'React Hooks' },
+          { src: ZustandLogo, name: 'Zustand' },
+          { src: ReduxLogo, name: 'Redux' },
+          { src: BootstrapOriginal, name: 'Bootstrap' },
+          { src: ZodLogo, name: 'Zod' }
+        ]}
+      />
+    </li>
+  </ul>
+</article>

@@ -1,0 +1,107 @@
+---
+import WhatsAppLogo from '@src/icons/dynamic/whatsapp-logo.astro'
+import TelegramLogo from '@src/icons/dynamic/telegram-logo.astro'
+import EmailIcon from '@src/icons/dynamic/email-icon.astro'
+import LinkedinLogo from '@src/icons/dynamic/linkedin-plain.astro'
+import GithubLogo from '@src/icons/dynamic/github-original.astro'
+import SpeechBalloonIcon from '@src/icons/dynamic/speech-balloon.astro'
+---
+
+<section
+  id='contact'
+  class='bg-blue-700 border-t border-blue-500 pt-16 pb-20 px-6 text-white text-center'
+  itemscope
+  itemtype='https://schema.org/Person'
+>
+  <h2 class='text-3xl uppercase font-bold drop-shadow'>Contato</h2>
+  <a href='/contact' class='inline-flex text-lime-200 mt-14 mb-12 gap-3'>
+    <span class='text-2xl'>Fale comigo</span>
+    <span class='inline-block'>
+      <SpeechBalloonIcon class='w-11 h-11 fill-current' />
+    </span>
+  </a>
+  <div class='relative'>
+    <div
+      class='absolute h-[1px] w-auto bg-slate-400 top-1/2 left-8 right-[calc(50%+3ch)]'
+    >
+    </div>
+    <div
+      class='absolute h-[1px] w-auto bg-slate-400 top-1/2 left-[calc(50%+3ch)] right-8'
+    >
+    </div>
+    <span class='uppercase font-bold text-xl text-neutral-50 z-10'> Ou</span>
+  </div>
+  <div
+    class='md:flex md:flex-wrap grid xxs:grid-cols-2 grid-cols-1 text-xs place-content-stretch md:justify-center mt-14 gap-6'
+  >
+    <div class='contact-group cursor-pointer flex flex-col items-center'>
+      <div class='flex text-lime-500 justify-center'>
+        <WhatsAppLogo class='w-11 h-11 fill-current' />
+        <TelegramLogo class='w-11 h-11 fill-current' />
+      </div>
+      <span class='text-lime-500 md:text-sm text-xs font-semibold'>
+        Whatsapp/Telegram
+      </span>
+      <span class='text-white' itemprop='telephone'> (74) 98827-0231</span>
+    </div>
+    <a
+      class='contact-group flex flex-col items-center'
+      href='mailto://contato@supra-dev.com'
+      rel='external nofollow noreferrer'
+      target='blank'
+      itemprop='email'
+    >
+      <div class='text-lime-500'>
+        <EmailIcon class='w-11 h-11 fill-current' />
+      </div>
+      <span class='text-lime-500 md:text-sm text-xs font-semibold'>
+        e-mail
+      </span>
+      <span class='text-white' itemprop='email'> contato@supra-dev.com</span>
+    </a>
+    <a
+      class='contact-group flex flex-col items-center'
+      href='https://www.linkedin.com/in/rogersanctus'
+      rel='external nofollow noreferrer'
+      target='blank'
+    >
+      <div class='text-lime-500'>
+        <LinkedinLogo class='w-11 h-11 fill-current' />
+      </div>
+      <span class='text-lime-500 md:text-sm text-xs font-semibold'>
+        Linkedin
+      </span>
+    </a>
+    <a
+      class='contact-group flex flex-col items-center'
+      href='https://github.com/rogersanctus'
+      rel='external nofollow noreferrer'
+      target='blank'
+    >
+      <div class='text-lime-500'>
+        <GithubLogo class='w-11 h-11 fill-current' />
+      </div>
+      <span class='text-lime-500 md:text-sm text-xs font-semibold'>
+        Github
+      </span>
+    </a>
+  </div>
+</section>
+
+<style>
+  #contact {
+    box-shadow: 0 -10px 30px -5px rgb(0 0 0 / 40%);
+  }
+
+  .contact-group {
+    /*filter: drop-shadow(0 12px 12px rgb(0 0 0 / 0.5)) drop-shadow(0 5px 6px rgb(0 0 0 / 0.1));*/
+  }
+
+  .contact-group:hover svg {
+    @apply text-lime-500/70;
+  }
+
+  .contact-group:hover div + span {
+    @apply text-lime-500/70;
+  }
+</style>
