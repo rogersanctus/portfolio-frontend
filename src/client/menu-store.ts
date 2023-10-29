@@ -1,48 +1,80 @@
-import { createContext } from 'react'
+import { FIT_MENU } from '@src/consts'
+import { atom } from 'nanostores'
 
-interface State {
-  isOpen: boolean
+/// state
+const initialValue = true
+export const isMenuOpen = atom(initialValue)
+
+function getIsMenuOpen() {
+  const isOpen = localStorage.getItem('isMenuOpen') ?? String(initialValue)
+
+  return isOpen === 'true'
 }
 
-export const initialState: State = {
-  isOpen: true
+export function toggleMenu(newValue?: boolean) {
+  isMenuOpen.set(newValue ?? !isMenuOpen.get())
 }
 
-type Actions = 'toggle' | 'reset' | 'store'
-
-export interface Action<T> {
-  type: Actions
-  payload?: T
+export function resetMenu() {
+  isMenuOpen.set(initialValue)
 }
 
-export function menuStoreReducer(state: State, action: Action<boolean>) {
-  switch (action.type) {
-    case 'toggle':
-      const newIsOpen = action.payload ?? !state.isOpen
+export function storeMenuState() {
+  localStorage.setItem('isMenuOpen', String(isMenuOpen.get()))
+}
 
-      return {
-        ...state,
-        isOpen: newIsOpen
-      }
-    case 'reset':
-      return initialState
+/// handling
+const initialOuter = {
+  wasMobileSizingToggled: false,
+  oldFitMenu: false
+}
 
-    case 'store':
-      localStorage.setItem('isMenuOpen', String(state.isOpen))
-      return state
+const outer = { ...initialOuter }
 
-    default:
-      return state
+function processWindowSize() {
+  let fitMenu = false
+
+  if (window.innerWidth >= FIT_MENU) {
+    fitMenu = true
+  }
+
+  if (window.innerWidth < FIT_MENU) {
+    fitMenu = false
+  }
+
+  if (!outer.wasMobileSizingToggled) {
+    outer.oldFitMenu = fitMenu
+
+    if (fitMenu) {
+      toggleMenu(true)
+    } else {
+      toggleMenu(getIsMenuOpen())
+    }
+
+    outer.wasMobileSizingToggled = true
+  }
+
+  if (outer.oldFitMenu !== fitMenu) {
+    outer.wasMobileSizingToggled = false
   }
 }
 
-export interface MenuStoreContext {
-  state: State
-  dispatch: (action: Action<boolean>) => void
+export function load() {
+  console.log('just called load the menu state')
+  resetMenu()
+
+  outer.wasMobileSizingToggled = initialOuter.wasMobileSizingToggled
+  outer.oldFitMenu = initialOuter.oldFitMenu
+
+  const isMenuOpen = getIsMenuOpen()
+
+  toggleMenu(isMenuOpen)
+  processWindowSize()
+
+  window.addEventListener('resize', processWindowSize)
 }
 
-/* eslint-disable @typescript-eslint/no-empty-function */
-export const menuStoreContext = createContext<MenuStoreContext>({
-  state: initialState,
-  dispatch: () => {}
-})
+export function unload() {
+  console.log('just called unload menu state')
+  window.removeEventListener('resize', processWindowSize)
+}

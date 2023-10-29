@@ -1,19 +1,28 @@
-import { useMenuStore } from '@src/client/MenuContextWrapper'
 import { MenuItem } from '@src/client/MenuItem.tsx'
 import { useEffect, useRef } from 'react'
 import { ArrowUp } from '@src/icons/dynamic/ArrowUp.tsx'
+import {
+  isMenuOpen,
+  storeMenuState,
+  toggleMenu,
+  load as loadMenu,
+  unload as unloadMenu
+} from '@src/client/menu-store'
+import { useStore } from '@nanostores/react'
 
 export function PageHeader() {
-  const { state, dispatch } = useMenuStore()
+  const $isMenuOpen = useStore(isMenuOpen)
   const btnTopo = useRef<HTMLAnchorElement | null>(null)
 
   function onToggleMenu() {
-    const newIsMenuOpen = !state.isOpen
-    dispatch({ type: 'toggle', payload: newIsMenuOpen })
-    dispatch({ type: 'store' })
+    const newIsMenuOpen = !$isMenuOpen
+    toggleMenu(newIsMenuOpen)
+    storeMenuState()
   }
 
   useEffect(() => {
+    loadMenu()
+
     if (btnTopo.current !== null) {
       if (window.scrollY <= 0) {
         btnTopo.current.style.display = 'none'
@@ -41,6 +50,7 @@ export function PageHeader() {
 
     return () => {
       document.removeEventListener('scroll', onScrollEvt)
+      unloadMenu()
     }
   }, [btnTopo])
 
@@ -72,7 +82,7 @@ export function PageHeader() {
         <nav className='flex justify-center'>
           <ul
             className={`${
-              state.isOpen ? '' : 'hidden'
+              $isMenuOpen ? '' : 'hidden'
             } flex fitmenu:flex-row flex-col gap-1 fitmenu:gap-8 text-white fitmenu:text-blue-500 nav-menu cursor-pointer fitmenu:w-auto w-full fitmenu:pb-0 pb-4`}
           >
             <MenuItem name='Sobre mim' section='about_me' />
