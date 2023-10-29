@@ -60,7 +60,6 @@ function processWindowSize() {
 }
 
 export function load() {
-  console.log('just called load the menu state')
   resetMenu()
 
   outer.wasMobileSizingToggled = initialOuter.wasMobileSizingToggled

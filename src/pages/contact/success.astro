@@ -1,0 +1,56 @@
+---
+import ContactLayout from '../../layouts/ContactLayout.astro'
+
+const formSuccess = Astro.cookies.get('form-success')
+
+if (!formSuccess || formSuccess.value !== 'true') {
+  return Astro.redirect('/contact')
+}
+
+Astro.cookies.delete('form-success', { path: '/' })
+
+const params = Astro.url.searchParams
+
+const fullName = params.get('full_name')
+const email = params.get('email')
+const cellphone = params.get('cellphone')
+---
+
+<ContactLayout>
+  <main
+    class='flex flex-col items-start xs:items-center justify-center text-left xs:text-center h-screen p-8 xs:p-12'
+  >
+    <h1 class='text-4xl text-green-600 font-bold mb-12'>
+      <span>Muito Obrigado</span>
+      {fullName !== null ? <span>, {fullName}</span> : ''}!
+    </h1>
+    <p class='text-2xl text-green-800 font-medium mb-2'>
+      Seu contato foi enviado com successo.
+    </p>
+    <p class='text-xl text-slate-600'>
+      {
+        email !== null ? (
+          <>
+            Se o email:
+            <span class='font-semibold'>{email}</span>
+            estiver correto, <span class='italic'>em breve</span> você receberá
+            uma resposta.
+          </>
+        ) : (
+          ''
+        )
+      }
+      {
+        email === null && cellphone !== null ? (
+          <>
+            Se seu celular: <span class='font-semibold'>{cellphone}</span>{' '}
+            estiver correto, você receberá meu contato{' '}
+            <span class='italic'>em breve</span>.
+          </>
+        ) : (
+          ''
+        )
+      }
+    </p>
+  </main>
+</ContactLayout>
