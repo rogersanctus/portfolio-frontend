@@ -3,6 +3,7 @@ import { Controller, useForm } from 'react-hook-form'
 import InputMask from 'react-input-mask'
 
 import { Callout } from './Callout.tsx'
+import { unmaskedPhone } from '@src/lib/helper.ts'
 
 interface ContactFormData {
   contact: {
@@ -46,7 +47,17 @@ export function ContactForm() {
 
   async function onSubmit(data: ContactFormData) {
     try {
+      const maskedPhone = data.contact.cellphone
+      const cellphone = unmaskedPhone(data.contact.cellphone)
+
+      console.log('maskedPhone', maskedPhone)
+      console.log('cellphone', cellphone)
+
       setCallout(null)
+
+      if (cellphone) {
+        data.contact.cellphone = cellphone
+      }
 
       const resp = await fetch('/api/contact', {
         method: 'POST',
@@ -60,14 +71,13 @@ export function ContactForm() {
 
         queryData.full_name = `${data.contact.first_name} ${data.contact.last_name}`
         const email = data.contact.email?.trim()
-        const cellphone = data.contact.cellphone?.trim()
 
         if (email) {
           queryData.email = email
         }
 
-        if (cellphone) {
-          queryData.cellphone = cellphone
+        if (maskedPhone) {
+          queryData.cellphone = maskedPhone
         }
 
         const query = new URLSearchParams(queryData)
