@@ -50,9 +50,6 @@ export function ContactForm() {
       const maskedPhone = data.contact.cellphone
       const cellphone = unmaskedPhone(data.contact.cellphone)
 
-      console.log('maskedPhone', maskedPhone)
-      console.log('cellphone', cellphone)
-
       setCallout(null)
 
       if (cellphone) {
