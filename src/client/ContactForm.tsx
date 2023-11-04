@@ -58,19 +58,31 @@ export function ContactForm() {
     message: string
   } | null>(null)
 
-  function onChangeInput(
-    event: ChangeEvent<HTMLInputElement>,
-    fieldName: string,
-    onChange: OnChangeCallback
-  ) {
-    const copy = { ...apiErrorsMap.current }
-    delete copy[fieldName]
+  function onChangeInput(fieldName: string, onChange?: OnChangeCallback) {
+    function preOnChange() {
+      const copy = { ...apiErrorsMap.current }
 
-    apiErrorsMap.current = copy
-    trigger(fieldName as keyof ContactFormData)
+      // Clear callout error if it was an api error
+      if (fieldName in copy) {
+        setCallout(null)
+      }
+
+      // Deletes the error and reassign the error map
+      delete copy[fieldName]
+
+      apiErrorsMap.current = copy
+      trigger(fieldName as keyof ContactFormData)
+    }
 
     if (onChange && typeof onChange === 'function') {
-      onChange(event)
+      return (event: ChangeEvent<HTMLInputElement>) => {
+        preOnChange()
+        return onChange(event)
+      }
+    }
+
+    return () => {
+      preOnChange()
     }
   }
 
@@ -132,7 +144,7 @@ export function ContactForm() {
         const { simplifiedErrors, paths } = apiErrors(error)
         apiErrorsMap.current = simplifiedErrors
 
-        for (const path in paths) {
+        for (const path of paths) {
           trigger(path as keyof ContactFormData)
         }
 
@@ -295,18 +307,26 @@ export function ContactForm() {
             >
               E-mail
             </label>
-            <input
-              type='email'
-              placeholder='Seu e-mail'
-              className={`text-sm sm:text-base border px-3 py-1 sm:px-4 sm:py-2 text-gray-500 outline-none focus:ring ${
-                errors.contact?.email
-                  ? 'border-rose-300 focus:ring-rose-300'
-                  : 'border-stone-400 focus:ring-sky-400 focus:border-sky-500'
-              }`}
-              {...register('contact.email', {
+            <Controller
+              control={control}
+              name='contact.email'
+              rules={{
                 validate: (value, formValues) =>
                   validateEmail('contact.email', value, formValues)
-              })}
+              }}
+              render={({ field: { onChange, ...rest } }) => (
+                <input
+                  type='text'
+                  placeholder='Seu e-mail'
+                  className={`text-sm sm:text-base border px-3 py-1 sm:px-4 sm:py-2 text-gray-500 outline-none focus:ring ${
+                    errors.contact?.email
+                      ? 'border-rose-300 focus:ring-rose-300'
+                      : 'border-stone-400 focus:ring-sky-400 focus:border-sky-500'
+                  }`}
+                  {...rest}
+                  onChange={onChangeInput('contact.email', onChange)}
+                />
+              )}
             />
             {errors.contact?.email && (
               <div className='absolute top-full mt-1'>
@@ -340,9 +360,7 @@ export function ContactForm() {
                       : 'border-stone-400 focus:ring-sky-400 focus:border-sky-500'
                   }`}
                   onBlur={onBlur}
-                  onChange={(e) =>
-                    onChangeInput(e, 'contact.cellphone', onChange)
-                  }
+                  onChange={onChangeInput('contact.cellphone', onChange)}
                   value={value}
                   ref={ref}
                 />
