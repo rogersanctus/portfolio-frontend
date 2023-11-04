@@ -148,7 +148,10 @@ export function ContactForm() {
           trigger(path as keyof ContactFormData)
         }
 
-        setCallout({ message: 'Erro de validação', type: 'error' })
+        setCallout({
+          message: 'Servidor: erro de validação de um ou mais campos',
+          type: 'error'
+        })
       }
     } catch (error) {
       console.error(error)
