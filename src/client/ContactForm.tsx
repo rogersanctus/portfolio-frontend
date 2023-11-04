@@ -1,9 +1,19 @@
-import { useEffect, useRef, useState } from 'react'
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ChangeEvent,
+  type FormEvent
+} from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import InputMask from 'react-input-mask'
 
-import { Callout } from './Callout.tsx'
-import { unmaskedPhone } from '@src/lib/helper.ts'
+import { Callout, type CalloutType } from './Callout.tsx'
+import {
+  apiErrors,
+  unmaskedPhone,
+  type SimplifieldErrors
+} from '@src/lib/helper.ts'
 
 interface ContactFormData {
   contact: {
@@ -27,6 +37,8 @@ function initialContactForm(): ContactFormData {
   }
 }
 
+type OnChangeCallback = (event: ChangeEvent) => void
+
 export function ContactForm() {
   const {
     register,
@@ -37,13 +49,40 @@ export function ContactForm() {
     formState: { errors, isSubmitting }
   } = useForm<ContactFormData>({ defaultValues: initialContactForm() })
 
-  const emailValidatingByTrigger = useRef(false)
-  const cellphoneValidatingByTrigger = useRef(false)
+  const validationByTrigger = useRef(false)
+  const apiErrorsMap = useRef<SimplifieldErrors>({})
+  const isFormSubmitting = useRef(false)
 
   const [callout, setCallout] = useState<{
-    type: string
+    type: CalloutType
     message: string
   } | null>(null)
+
+  function onChangeInput(
+    event: ChangeEvent<HTMLInputElement>,
+    fieldName: string,
+    onChange: OnChangeCallback
+  ) {
+    const copy = { ...apiErrorsMap.current }
+    delete copy[fieldName]
+
+    apiErrorsMap.current = copy
+    trigger(fieldName as keyof ContactFormData)
+
+    if (onChange && typeof onChange === 'function') {
+      onChange(event)
+    }
+  }
+
+  async function myHandleSubmit(e: FormEvent<HTMLFormElement>) {
+    try {
+      isFormSubmitting.current = true
+      const handler = handleSubmit(onSubmit)
+      return await handler(e)
+    } finally {
+      isFormSubmitting.current = false
+    }
+  }
 
   async function onSubmit(data: ContactFormData) {
     try {
@@ -87,23 +126,50 @@ export function ContactForm() {
           localStorage.setItem('form-data', JSON.stringify(data))
           window.location.reload()
         }
+      } else if (resp.status === 422) {
+        const error = await resp.json()
+
+        const { simplifiedErrors, paths } = apiErrors(error)
+        apiErrorsMap.current = simplifiedErrors
+
+        for (const path in paths) {
+          trigger(path as keyof ContactFormData)
+        }
+
+        setCallout({ message: 'Erro de validação', type: 'error' })
       }
     } catch (error) {
       console.error(error)
     }
   }
 
+  function validateField(fieldName: string): string | false {
+    const error = apiErrorsMap.current[fieldName]
+
+    if (error && typeof error === 'string') {
+      return error
+    }
+
+    return false
+  }
+
   function validateEmail(
+    fieldName: string,
     email: string,
     formValues: ContactFormData
   ): boolean | string {
     // This check is to avoid infinite recursion by triggering the validation
-    if (!cellphoneValidatingByTrigger.current) {
-      cellphoneValidatingByTrigger.current = true
+    if (!isFormSubmitting.current && !validationByTrigger.current) {
+      validationByTrigger.current = true
       trigger('contact.cellphone')
+      validationByTrigger.current = false
     }
 
-    emailValidatingByTrigger.current = false
+    const apiError = validateField(fieldName)
+
+    if (apiError) {
+      return apiError
+    }
 
     // When is the e-mail valid?
     if (!!email || !!formValues.contact.cellphone) {
@@ -114,15 +180,21 @@ export function ContactForm() {
   }
 
   function validateCellphone(
+    fieldName: string,
     cellphone: string,
     formValues: ContactFormData
   ): boolean | string {
-    if (!emailValidatingByTrigger.current) {
-      emailValidatingByTrigger.current = true
+    if (!isFormSubmitting.current && !validationByTrigger.current) {
+      validationByTrigger.current = true
       trigger('contact.email')
+      validationByTrigger.current = false
     }
 
-    cellphoneValidatingByTrigger.current = false
+    const apiError = validateField(fieldName)
+
+    if (apiError) {
+      return apiError
+    }
 
     if (!!cellphone || !!formValues.contact.email) {
       return true
@@ -166,7 +238,7 @@ export function ContactForm() {
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col'>
+      <form onSubmit={myHandleSubmit} className='flex flex-col'>
         <div className='flex flex-col gap-10'>
           <div className='flex flex-col md:flex-row gap-6'>
             <div className='flex flex-col w-full relative'>
@@ -232,7 +304,8 @@ export function ContactForm() {
                   : 'border-stone-400 focus:ring-sky-400 focus:border-sky-500'
               }`}
               {...register('contact.email', {
-                validate: validateEmail
+                validate: (value, formValues) =>
+                  validateEmail('contact.email', value, formValues)
               })}
             />
             {errors.contact?.email && (
@@ -254,7 +327,8 @@ export function ContactForm() {
               control={control}
               name='contact.cellphone'
               rules={{
-                validate: validateCellphone
+                validate: (value, formValues) =>
+                  validateCellphone('contact.cellphone', value, formValues)
               }}
               render={({ field: { onChange, onBlur, value, ref } }) => (
                 <InputMask
@@ -266,7 +340,9 @@ export function ContactForm() {
                       : 'border-stone-400 focus:ring-sky-400 focus:border-sky-500'
                   }`}
                   onBlur={onBlur}
-                  onChange={onChange}
+                  onChange={(e) =>
+                    onChangeInput(e, 'contact.cellphone', onChange)
+                  }
                   value={value}
                   ref={ref}
                 />
@@ -304,7 +380,7 @@ export function ContactForm() {
             )}
           </div>
           {callout !== null && (
-            <Callout type='info' message={callout.message} />
+            <Callout type={callout.type} message={callout.message} />
           )}
         </div>
         <button
