@@ -1,4 +1,4 @@
-type CalloutType = 'success' | 'info' | 'warning' | 'error'
+export type CalloutType = 'success' | 'info' | 'warning' | 'error'
 
 interface CalloutProps {
   type: CalloutType
