@@ -1,9 +1,13 @@
 ---
+import { getLanguage, useLocale } from '@src/lib/i18n'
 import SectionCard from './SectionCard.astro'
 import LinkIcon from '@src/icons/external-link.astro'
+
+const lang = getLanguage(Astro.url)
+const t = useLocale(lang)
 ---
 
-<SectionCard section_id='experiences' title='Experiências'>
+<SectionCard section_id='experiences' title={t('Experiences', 'experiences')}>
   <ul class='mt-12 mb-10 flex flex-col gap-14 text-gray-900'>
     <li class=''>
       <h3 class='text-gray-700 text-xl font-semibold'>
@@ -13,20 +17,21 @@ import LinkIcon from '@src/icons/external-link.astro'
           href='http://www.pingstudio.com.br/'
           rel='external nofollow noreferrer'
           target='blank'
-          title='PingStudio homepage'
+          title={`PingStudio - ${t('homepage', 'experiences')}`}
         >
           <LinkIcon class='w-4 h-4 text-blue-500' />
         </a>
       </h3>
-      <i>Consultoria e desenvolvimento de Softwares</i>
+      <i>{t('pingstudio.business', 'experiences')}</i>
       <div class='ml-5 mt-5'>
         <div class='text-orange-500 text-md font-semibold'>2018 - 2021</div>
         <p class='text-xl font-light mb-5'>
-          Prestador de serviços para projetos internos e como freelancer para
-          contrato com outras empresas.
+          {t('pingstudio.function', 'experiences')}
         </p>
         <div>
-          <h4 class='text-gray-700 font-semibold'>Tecnologias usadas:</h4>
+          <h4 class='text-gray-700 font-semibold'>
+            {t('Used technologies', 'experiences')}:
+          </h4>
           <span class='text-blue-700'>
             JAVA, PHP, HTML, CSS, SASS, Javascript, AngularJS, VueJS, Angular 7,
             MongoDB, MySQL
@@ -43,21 +48,21 @@ import LinkIcon from '@src/icons/external-link.astro'
           href='https://www.solinftec.com/'
           rel='external nofollow noreferrer'
           target='blank'
-          title='Solinftec homepage'
+          title={`Solinftec - ${t('homepage', 'experiences')}`}
         >
           <LinkIcon class='w-4 h-4 text-blue-500' />
         </a>
       </h3>
-      <i>Tecnologias para o Agronegócio</i>
+      <i>{t('solinftec.business', 'experiences')}</i>
       <div class='ml-5 mt-5'>
         <div class='text-orange-500 text-md font-semibold'>2018 - 2021</div>
         <p class='text-xl font-light mb-5'>
-          Freelancer por intermédio da PingStudio. Aplicações de média e alta
-          complexidade envolvendo interfaces para equipamentos e monitoramento
-          por Mapas/GPS.
+          {t('solinftec.function', 'experiences')}
         </p>
         <div>
-          <h4 class='text-gray-700 font-semibold'>Tecnologias usadas:</h4>
+          <h4 class='text-gray-700 font-semibold'>
+            {t('Used technologies', 'experiences')}:
+          </h4>
           <span class='text-blue-700'>
             JAVA, HTML, CSS, SASS, Javascript, AngularJS, VueJS, PL/SQL
           </span>
@@ -72,19 +77,21 @@ import LinkIcon from '@src/icons/external-link.astro'
           href='https://dasa.com.br/'
           rel='external nofollow noreferrer'
           target='blank'
-          title='Dasa homepage'
+          title={`Dasa - ${t('homepage', 'experiences')}`}
         >
           <LinkIcon class='w-4 h-4 text-blue-500' />
         </a>
       </h3>
-      <i class=''>Rede de saúde integrada.</i>
+      <i class=''>{t('dasa.business', 'experiences')}</i>
       <div class='ml-5 mt-5'>
         <div class='text-orange-500 text-md font-semibold'>2021 - 2021</div>
         <p class='text-xl font-light mb-5'>
-          Trabalhamos com interfaces para agendamentos e consultas médicas.
+          {t('dasa.function', 'experiences')}
         </p>
         <div>
-          <h4 class='text-gray-700 font-semibold'>Tecnologias usadas:</h4>
+          <h4 class='text-gray-700 font-semibold'>
+            {t('Used technologies', 'experiences')}:
+          </h4>
           <span class='text-blue-700'>
             HTML, CSS, SASS, Javascript, VueJS, MySQL, Jenkins, Jest, Testing
             Library
@@ -100,19 +107,21 @@ import LinkIcon from '@src/icons/external-link.astro'
           href='https://perfectpay.com.br/'
           rel='external nofollow noreferrer'
           target='blank'
-          title='Perfect Pay homepage'
+          title={`Perfect Pay - ${t('homepage', 'experiences')}`}
         >
           <LinkIcon class='w-4 h-4 text-blue-500' />
         </a>
       </h3>
-      <i>Marketing Digital</i>
+      <i>{t('perfectpay.business', 'experiences')}</i>
       <div class='ml-5 mt-5'>
         <div class='text-orange-500 text-lg font-semibold'>2021 - 2022</div>
         <p class='text-xl font-light mb-5'>
-          Podemos trabalhar com projeto de captura e conversão de Leads.
+          {t('perfectpay.function', 'experiences')}
         </p>
         <div>
-          <h4 class='text-gray-700 font-semibold'>Tecnologias usadas:</h4>
+          <h4 class='text-gray-700 font-semibold'>
+            {t('Used technologies', 'experiences')}:
+          </h4>
           <span class='text-blue-700'>
             PHP, HTML, CSS, SASS, Javascript, VueJS, MySQL, Websockets, Jest,
             Testing Library

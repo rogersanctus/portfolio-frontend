@@ -4,10 +4,14 @@ import SkillList from './SkillList.astro'
 import GitOriginal from '@src/icons/git-original.svg'
 import DockerOriginal from '@src/icons/docker-original.svg'
 import JenkinsOriginal from '@src/icons/jenkins-original.svg'
+import { getLanguage, useLocale } from '@src/lib/i18n'
+
+const lang = getLanguage(Astro.url)
+const t = useLocale(lang)
 ---
 
 <article class='mt-4 text-center'>
-  <h3 class='xxs:text-2xl text-lg text-orange-500'>Ferramentas</h3>
+  <h3 class='xxs:text-2xl text-lg text-orange-500'>{t('Tools', 'skills')}</h3>
   <SkillList
     skills={[
       { src: GitOriginal, name: 'Git' },

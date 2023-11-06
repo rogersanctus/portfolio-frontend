@@ -25,13 +25,21 @@ import ReactOriginal from '@src/icons/react-original.svg'
 import ZustandLogo from '@src/icons/zustand-logo.png'
 import ReduxLogo from '@src/icons/redux-logo.svg'
 import ZodLogo from '@src/icons/zod-logo.svg'
+import { getLanguage, useLocale } from '@src/lib/i18n'
+
+const lang = getLanguage(Astro.url)
+const t = useLocale(lang)
 ---
 
 <article class='text-center'>
-  <h3 class='xxs:text-2xl text-lg text-orange-500'>Stacks Frontend</h3>
+  <h3 class='xxs:text-2xl text-lg text-orange-500'>
+    {t('Frontend Stacks', 'skills')}
+  </h3>
   <ul>
     <li class='mt-8'>
-      <h4 class='xxs:text-xl text-md text-red-500 font-semibold'>Uso Geral</h4>
+      <h4 class='xxs:text-xl text-md text-red-500 font-semibold'>
+        {t('General Use', 'skills')}
+      </h4>
       <SkillList
         skills={[
           { src: Html5Original, name: 'HTML 5' },

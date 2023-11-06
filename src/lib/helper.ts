@@ -77,3 +77,13 @@ export function apiErrors(error: { errors: ApiErrors }): {
 
   return { errors, simplifiedErrors, paths }
 }
+
+export function getIp(req: Request): string | null {
+  const headers = req.headers
+
+  const xRealIp = headers.get('x-real-ip')
+  const xForwardedFor = headers.get('x-forwarded-for')
+  const cfConnectingIp = headers.get('cf-connecting-ip')
+
+  return xRealIp ?? xForwardedFor ?? cfConnectingIp
+}

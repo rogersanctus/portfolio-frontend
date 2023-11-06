@@ -9,10 +9,16 @@ import {
   unload as unloadMenu
 } from '@src/client/menu-store'
 import { useStore } from '@nanostores/react'
+import { useLocale, type Language } from '@src/lib/i18n'
 
-export function PageHeader() {
+interface PageHeaderProps {
+  lang: Language
+}
+
+export function PageHeader({ lang }: PageHeaderProps) {
   const $isMenuOpen = useStore(isMenuOpen)
   const btnTopo = useRef<HTMLAnchorElement | null>(null)
+  const t = useLocale(lang)
 
   function onToggleMenu() {
     const newIsMenuOpen = !$isMenuOpen
@@ -85,13 +91,19 @@ export function PageHeader() {
               $isMenuOpen ? '' : 'hidden'
             } flex fitmenu:flex-row flex-col gap-1 fitmenu:gap-8 text-white fitmenu:text-blue-500 nav-menu cursor-pointer fitmenu:w-auto w-full fitmenu:pb-0 pb-4`}
           >
-            <MenuItem name='Sobre mim' section='about_me' />
-            <MenuItem name='Habilidades' section='skills' />
-            <MenuItem name='No que trabalho' section='about_jobs' />
-            {/*<MenuItem name="Portfólio" section="portfolio" />*/}
-            <MenuItem name='Experiências' section='experiences' />
-            {/*<MenuItem name="Perguntas Frequentes" section="faq" />*/}
-            <MenuItem name='Contato' section='contact' />
+            <MenuItem name={t('About me', 'page_header')} section='about_me' />
+            <MenuItem name={t('Skills', 'page_header')} section='skills' />
+            <MenuItem
+              name={t('Services', 'page_header')}
+              section='about_jobs'
+            />
+            {/*<MenuItem name={t('Portfolio', 'page_header')} section="portfolio" />*/}
+            <MenuItem
+              name={t('Experiences', 'page_header')}
+              section='experiences'
+            />
+            {/*<MenuItem name={t('Frequently Asked Questions', 'page_header')} section="faq" />*/}
+            <MenuItem name={t('Contact', 'page_header')} section='contact' />
           </ul>
         </nav>
       </header>
@@ -99,7 +111,7 @@ export function PageHeader() {
         <a
           href='#top'
           className='fixed bottom-4 right-4 hidden'
-          title='Go to the top'
+          title={t('Go to the top', 'page_header')}
           ref={btnTopo}
         >
           <ArrowUp className='fill-current text-lime-500 hover:text-lime-500/70 w-12 h-12 drop-shadow' />

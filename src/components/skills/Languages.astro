@@ -9,10 +9,16 @@ import JavaOriginal from '@src/icons/java-original.svg'
 import PythonOriginal from '@src/icons/python-original.svg'
 import CplusplusOriginal from '@src/icons/cplusplus-original.svg'
 import LuaOriginal from '@src/icons/lua-original.svg'
+import { getLanguage, useLocale } from '@src/lib/i18n'
+
+const lang = getLanguage(Astro.url)
+const t = useLocale(lang)
 ---
 
 <article class='text-center'>
-  <h3 class='xxs:text-2xl text-lg text-orange-500'>Linguagens</h3>
+  <h3 class='xxs:text-2xl text-lg text-orange-500'>
+    {t('Languages', 'skills')}
+  </h3>
   {
     /** From the ul list above take the url and name of each SkillItem and add them all as skills property of a SkillList element */
   }

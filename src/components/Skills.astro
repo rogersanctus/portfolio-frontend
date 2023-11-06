@@ -1,12 +1,16 @@
 ---
+import { getLanguage, useLocale } from '@src/lib/i18n'
 import SectionCard from './SectionCard.astro'
 import Frameworks from './skills/Frameworks.astro'
 import Languages from './skills/Languages.astro'
 import Stacks from './skills/Stacks.astro'
 import Tools from './skills/Tools.astro'
+
+const lang = getLanguage(Astro.url)
+const t = useLocale(lang)
 ---
 
-<SectionCard section_id='skills' title='Minhas Habilidades'>
+<SectionCard section_id='skills' title={t('My Skills', 'skills')}>
   <ul class='flex flex-col gap-6 mt-12'>
     <li>
       <Languages />

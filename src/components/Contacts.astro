@@ -5,6 +5,10 @@ import EmailIcon from '@src/icons/dynamic/email-icon.astro'
 import LinkedinLogo from '@src/icons/dynamic/linkedin-plain.astro'
 import GithubLogo from '@src/icons/dynamic/github-original.astro'
 import SpeechBalloonIcon from '@src/icons/dynamic/speech-balloon.astro'
+import { getLanguage, useLocale } from '@src/lib/i18n'
+
+const lang = getLanguage(Astro.url)
+const t = useLocale(lang)
 ---
 
 <section
@@ -13,9 +17,11 @@ import SpeechBalloonIcon from '@src/icons/dynamic/speech-balloon.astro'
   itemscope
   itemtype='https://schema.org/Person'
 >
-  <h2 class='text-3xl uppercase font-bold drop-shadow'>Contato</h2>
+  <h2 class='text-3xl uppercase font-bold drop-shadow'>
+    {t('Contact', 'contact.page')}
+  </h2>
   <a href='/contact' class='inline-flex text-lime-200 mt-14 mb-12 gap-3'>
-    <span class='text-2xl'>Fale comigo</span>
+    <span class='text-2xl'>{t('Talk to me', 'contact.page')}</span>
     <span class='inline-block'>
       <SpeechBalloonIcon class='w-11 h-11 fill-current' />
     </span>
@@ -29,7 +35,9 @@ import SpeechBalloonIcon from '@src/icons/dynamic/speech-balloon.astro'
       class='absolute h-[1px] w-auto bg-slate-400 top-1/2 left-[calc(50%+3ch)] right-8'
     >
     </div>
-    <span class='uppercase font-bold text-xl text-neutral-50 z-10'> Ou</span>
+    <span class='uppercase font-bold text-xl text-neutral-50 z-10'
+      >{t('Or', 'contact.page')}</span
+    >
   </div>
   <div
     class='md:flex md:flex-wrap grid xxs:grid-cols-2 grid-cols-1 text-xs place-content-stretch md:justify-center mt-14 gap-6'

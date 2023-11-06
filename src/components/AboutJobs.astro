@@ -1,38 +1,64 @@
 ---
 import SectionCard from './SectionCard.astro'
+import { getLanguage, useLocale } from '@src/lib/i18n'
+
+const lang = getLanguage(Astro.url)
+const t = useLocale(lang)
 ---
 
-<SectionCard section_id='about_jobs' title='Que tipo de aplicações desenvolvo'>
+<SectionCard
+  section_id='about_jobs'
+  title={t('What kind of applications I develop', 'about_jobs')}
+>
   <ul
     class='list-inside list-disc mt-10 xs:text-xl text-md text-gray-900 font-poppins'
     itemscope
     itemtype='https://schema.org/Service'
   >
-    <li class='cursor-pointer' itemprop='description'>Aplicações SSR</li>
-    <li class='cursor-pointer' itemprop='description'>Aplicações PWA</li>
-    <li class='cursor-pointer' itemprop='description'>Landing Pages</li>
-    <li class='cursor-pointer' itemprop='description'>Aplicações SPA</li>
-    <li class='cursor-pointer' itemprop='description'>E-commerces</li>
-    <li class='cursor-pointer' itemprop='description'>Blogs</li>
     <li class='cursor-pointer' itemprop='description'>
-      Aplicações desktop com Electron
+      {t('SSR Applications', 'about_jobs')}
+    </li>
+    <li class='cursor-pointer' itemprop='description'>
+      {t('PWA Applications', 'about_jobs')}
+    </li>
+    <li class='cursor-pointer' itemprop='description'>
+      {t('Landing Pages', 'about_jobs')}
+    </li>
+    <li class='cursor-pointer' itemprop='description'>
+      {t('SPA Applications', 'about_jobs')}
+    </li>
+    <li class='cursor-pointer' itemprop='description'>
+      {t('E-commerces', 'about_jobs')}
+    </li>
+    <li class='cursor-pointer' itemprop='description'>
+      {t('Blogs', 'about_jobs')}
+    </li>
+    <li class='cursor-pointer' itemprop='description'>
+      {t('Desktop Applications with Electron', 'about_jobs')}
     </li>
   </ul>
   <div class='mt-14'>
     <h3 class='xs:text-2xl text-lg uppercase text-gray-700'>
-      O que você pode esperar?
+      {t('What can you expect?', 'about_jobs')}
     </h3>
     <ul
       class='mt-10 list-inside list-disc text-gray-900 xs:text-xl text-md'
       itemscope
       itemtype='https://schema.org/Action'
     >
-      <li itemprop='result'>Transforme sua ideia em um produto!</li>
       <li itemprop='result'>
-        Dê manutenção e faça melhorias em sua aplicação.
+        {t('Turn your idea into a product!', 'about_jobs')}
       </li>
       <li itemprop='result'>
-        Ou traga-a para Web/Mobile com responsividade e acessibilidade.
+        {t('Mantein maintenance and improve your application.', 'about_jobs')}
+      </li>
+      <li itemprop='result'>
+        {
+          t(
+            'Or bring it to Web/Mobile with responsive and accessibility.',
+            'about_jobs'
+          )
+        }
       </li>
     </ul>
   </div>
