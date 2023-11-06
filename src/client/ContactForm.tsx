@@ -14,6 +14,7 @@ import {
   unmaskedPhone,
   type SimplifieldErrors
 } from '@src/lib/helper.ts'
+import { useLocale, type Language } from '@src/lib/i18n.ts'
 
 interface ContactFormData {
   contact: {
@@ -39,7 +40,13 @@ function initialContactForm(): ContactFormData {
 
 type OnChangeCallback = (event: ChangeEvent) => void
 
-export function ContactForm() {
+interface ContactFormProps {
+  lang: Language
+}
+
+export function ContactForm({ lang }: ContactFormProps) {
+  const t = useLocale(lang)
+
   const {
     register,
     control,
@@ -141,7 +148,7 @@ export function ContactForm() {
       } else if (resp.status === 422) {
         const error = await resp.json()
 
-        const { simplifiedErrors, paths } = apiErrors(error)
+        const { simplifiedErrors, paths } = apiErrors(error, lang)
         apiErrorsMap.current = simplifiedErrors
 
         for (const path of paths) {
@@ -149,7 +156,10 @@ export function ContactForm() {
         }
 
         setCallout({
-          message: 'Servidor: erro de validação de um ou mais campos',
+          message: t(
+            'Server: error while validating one or more fields',
+            'contact.page'
+          ),
           type: 'error'
         })
       }
@@ -191,7 +201,10 @@ export function ContactForm() {
       return true
     }
 
-    return 'Por favor, informe seu e-mail caso não deseje informar seu celular'
+    return t(
+      "Please, inform your e-mail if you don't want to inform your phone",
+      'contact.page'
+    )
   }
 
   function validateCellphone(
@@ -215,7 +228,10 @@ export function ContactForm() {
       return true
     }
 
-    return 'Por favor, informe seu celular caso não deseje informar seu e-mail'
+    return t(
+      "Please, inform your phone if you don't want to inform your e-mail",
+      'contact.page'
+    )
   }
 
   useEffect(() => {
@@ -231,8 +247,10 @@ export function ContactForm() {
 
       setCallout({
         type: 'info',
-        message:
-          'Para sua segurança, seu formulário foi recarregado. Por favor, tente reenviá-lo agora.'
+        message: t(
+          'For your safety, your form was reloaded. Please, try sending it again.',
+          'contact.page'
+        )
       })
 
       return () => {}
@@ -261,11 +279,12 @@ export function ContactForm() {
                 htmlFor='first_name'
                 className='text-sm sm:text-base mb-2 text-gray-800'
               >
-                Nome <span className='text-rose-500'>*</span>
+                {t('First name', 'contact.page') + ' '}
+                <span className='text-rose-500'>*</span>
               </label>
               <input
                 type='text'
-                placeholder='Seu primeiro nome'
+                placeholder={t('Your first name', 'contact.page')}
                 className={`text-sm sm:text-base border px-3 py-1 sm:px-4 sm:py-2 text-gray-500 outline-none focus:ring ${
                   errors.contact?.first_name
                     ? 'border-rose-300 focus:ring-rose-300'
@@ -275,7 +294,9 @@ export function ContactForm() {
               />
               {errors.contact?.first_name && (
                 <div className='absolute top-full mt-1'>
-                  <span className='text-rose-500'>Campo obrigatório</span>
+                  <span className='text-rose-500'>
+                    {t('Required field', 'contact.page')}
+                  </span>
                 </div>
               )}
             </div>
@@ -284,11 +305,12 @@ export function ContactForm() {
                 htmlFor='last_name'
                 className='text-sm sm:text-base mb-2 text-gray-800'
               >
-                Sobrenome <span className='text-rose-500'>*</span>
+                {t('Last name', 'contact.page') + ' '}
+                <span className='text-rose-500'>*</span>
               </label>
               <input
                 type='text'
-                placeholder='Seu sobrenome'
+                placeholder={t('Your last name', 'contact.page')}
                 className={`text-sm sm:text-base border px-3 py-1 sm:px-4 sm:py-2 text-gray-500 outline-none focus:ring ${
                   errors.contact?.last_name
                     ? 'border-rose-300 focus:ring-rose-300'
@@ -298,7 +320,9 @@ export function ContactForm() {
               />
               {errors.contact?.last_name && (
                 <div className='absolute top-full mt-1'>
-                  <span className='text-rose-500'>Campo obrigatório</span>
+                  <span className='text-rose-500'>
+                    {t('Required field', 'contact.page')}
+                  </span>
                 </div>
               )}
             </div>
@@ -320,7 +344,7 @@ export function ContactForm() {
               render={({ field: { onChange, ...rest } }) => (
                 <input
                   type='text'
-                  placeholder='Seu e-mail'
+                  placeholder={t('Your e-mail', 'contact.page')}
                   className={`text-sm sm:text-base border px-3 py-1 sm:px-4 sm:py-2 text-gray-500 outline-none focus:ring ${
                     errors.contact?.email
                       ? 'border-rose-300 focus:ring-rose-300'
@@ -344,7 +368,7 @@ export function ContactForm() {
               htmlFor='cellphone'
               className='text-sm sm:text-base mb-2 text-gray-800'
             >
-              Celular/Whatsapp
+              {t('Phone/Whatsapp', 'contact.page')}
             </label>
             <Controller
               control={control}
@@ -356,7 +380,7 @@ export function ContactForm() {
               render={({ field: { onChange, onBlur, value, ref } }) => (
                 <InputMask
                   mask='+55 (99) 99999-9999'
-                  placeholder='Seu celular'
+                  placeholder={t('Your phone number', 'contact.page')}
                   className={`text-sm sm:text-base border px-3 py-1 sm:px-4 sm:py-2 text-gray-500 outline-none focus:ring ${
                     errors.contact?.cellphone
                       ? 'border-rose-300 focus:ring-rose-300'
@@ -382,10 +406,11 @@ export function ContactForm() {
               htmlFor='message'
               className='text-sm sm:text-base mb-2 text-gray-800'
             >
-              Mensagem <span className='text-rose-500'>*</span>
+              {t('Message', 'contact.page')}{' '}
+              <span className='text-rose-500'>*</span>
             </label>
             <textarea
-              placeholder='Sua mensagem'
+              placeholder={t('Your message', 'contact.page')}
               rows={5}
               className={`text-sm sm:text-base border px-3 py-1 sm:px-4 sm:py-2 text-gray-500 outline-none focus:ring ${
                 errors.message
@@ -396,7 +421,9 @@ export function ContactForm() {
             ></textarea>
             {errors.message && (
               <div className='absolute top-full mt-1'>
-                <span className='text-rose-500'>Campo obrigatório</span>
+                <span className='text-rose-500'>
+                  {t('Required field', 'contact.page')}
+                </span>
               </div>
             )}
           </div>
@@ -409,7 +436,7 @@ export function ContactForm() {
           className='rounded bg-lime-600 text-white mt-12 px-6 py-4 font-bold'
           disabled={isSubmitting}
         >
-          Enviar
+          {t('Send', 'contact.page')}
         </button>
       </form>
     </>

@@ -1,5 +1,20 @@
 {
   "Contact": "Contact",
   "Talk to me": "Talk to me",
-  "Or": "Or"
+  "Or": "Or",
+  "Required field": "Required field",
+  "Ask questions, send proposals, suggestions or request a quote.": "Ask questions, send proposals, suggestions or request a quote.",
+  "Please, inform your e-mail if you don't want to inform your phone": "Please, inform your e-mail if you don't want to inform your phone",
+  "Please, inform your phone if you don't want to inform your e-mail": "Please, inform your phone if you don't want to inform your e-mail",
+  "For your safety, your form was reloaded. Please, try sending it again.": "For your safety, your form was reloaded. Please, try sending it again.",
+  "First name": "First name",
+  "Last name": "Last name",
+  "Your first name": "Your first name",
+  "Your last name": "Your last name",
+  "Your e-mail": "Your e-mail",
+  "Phone/Whatsapp": "Phone/Whatsapp",
+  "Your phone number": "Your phone number",
+  "Message": "Message",
+  "Your message": "Your message",
+  "Send": "Send"
 }

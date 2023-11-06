@@ -1,0 +1,7 @@
+{
+  "can't be blank": "Preenchimento obrigatório",
+  "is not a valid phone number": "Número de telefone inválido",
+  "has invalid format": "Formato inválido",
+  "can't be blank when cellphone is blank": "Preenchimento obrigatório quando celular está vazio",
+  "can't be blank when email is blank": "Preenchimento obrigatório quando e-mail está vazio"
+}

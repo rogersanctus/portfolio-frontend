@@ -1,5 +1,21 @@
 {
   "Contact": "Contato",
   "Talk to me": "Fale comigo",
-  "Or": "Ou"
+  "Or": "Ou",
+  "Required field": "Campo obrigatório",
+  "Server: error while validating one or more fields": "Servidor: erro de validação de um ou mais campos",
+  "Ask questions, send proposals, suggestions or request a quote.": "Tire suas dúvidas, envie propostas, sugestões ou pedido de orçamento.",
+  "Please, inform your e-mail if you don't want to inform your phone": "Por favor, informe seu e-mail caso não deseje informar seu celular",
+  "Please, inform your phone if you don't want to inform your e-mail": "Por favor, informe seu celular caso não deseje informar seu e-mail",
+  "For your safety, your form was reloaded. Please, try sending it again.": "Para sua segurança, seu formulário foi recarregado. Por favor, tente reenviá-lo agora.",
+  "First name": "Nome",
+  "Last name": "Sobrenome",
+  "Your first name": "Seu primeiro nome",
+  "Your last name": "Seu sobrenome",
+  "Your e-mail": "Seu e-mail",
+  "Phone/Whatsapp": "Celular/Whatsapp",
+  "Your phone number": "Seu celular",
+  "Message": "Mensagem",
+  "Your message": "Sua mensagem",
+  "Send": "Enviar"
 }

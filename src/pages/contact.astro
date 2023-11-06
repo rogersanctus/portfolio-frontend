@@ -1,6 +1,10 @@
 ---
 import ContactLayout from '@src/layouts/ContactLayout.astro'
 import { ContactForm } from '@src/client/ContactForm.tsx'
+import { getLanguage, useLocale } from '@src/lib/i18n'
+
+const lang = getLanguage(Astro.url)
+const t = useLocale(lang)
 
 try {
   const headers = new Headers()
@@ -50,12 +54,17 @@ try {
       class='w-full sm:w-auto p-4 sm:p-14 flex flex-col flex-1 justify-center border border-gray-50 bg-slate-200'
     >
       <h1 class='text-2xl sm:text-4xl font-semibold text-gray-800 text-center'>
-        Fale comigo
+        {t('Talk to me', 'contact.page')}
       </h1>
       <p class='text-xl sm:text-2xl text-center text-slate-600 mt-2 mb-12'>
-        Tire suas dúvidas, envie propostas, sugestões ou pedido de orçamento.
+        {
+          t(
+            'Ask questions, send proposals, suggestions or request a quote.',
+            'contact.page'
+          )
+        }
       </p>
-      <ContactForm client:load />
+      <ContactForm client:load lang={lang} />
     </div>
   </div>
 </ContactLayout>

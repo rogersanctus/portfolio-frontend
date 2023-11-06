@@ -1,0 +1,7 @@
+{
+  "can't be blank": "Can't be blank",
+  "is not a valid phone number": "Is not a valid phone number",
+  "has invalid format": "Has invalid format",
+  "can't be blank when cellphone is blank": "Can't be blank when cellphone is blank",
+  "can't be blank when email is blank": "Can't be blank when email is blank"
+}

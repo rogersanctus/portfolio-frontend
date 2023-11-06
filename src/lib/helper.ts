@@ -1,3 +1,5 @@
+import { defaultLanguage, useLocale, type Language } from './i18n'
+
 export function unmaskedPhone(masked: string): string | null {
   if (!masked) {
     return null
@@ -18,11 +20,15 @@ export interface SimplifieldErrors {
   [key: string]: string
 }
 
-export function apiErrors(error: { errors: ApiErrors }): {
+export function apiErrors(
+  error: { errors: ApiErrors },
+  lang: Language = defaultLanguage
+): {
   errors: Errors
   simplifiedErrors: SimplifieldErrors
   paths: string[]
 } {
+  const t = useLocale(lang)
   const paths: string[] = []
   const simplifiedErrors: SimplifieldErrors = {}
 
@@ -31,6 +37,8 @@ export function apiErrors(error: { errors: ApiErrors }): {
     path?: string
   ): { error: string | Errors; path?: string } {
     if (typeof error === 'string') {
+      error = t(error, 'api.errors')
+
       if (path) {
         paths.push(path)
         simplifiedErrors[path] = error
@@ -39,7 +47,7 @@ export function apiErrors(error: { errors: ApiErrors }): {
     }
 
     if (Array.isArray(error)) {
-      const joinedError = error.join(', ')
+      const joinedError = error.map((err) => t(err, 'api.errors')).join(', ')
 
       if (path) {
         paths.push(path)
@@ -49,15 +57,17 @@ export function apiErrors(error: { errors: ApiErrors }): {
     }
 
     if (typeof error === 'object') {
-      const mappedError = Object.keys(error).reduce<Errors>((acc, key) => {
-        const value = error[key]
-        const { error: newError } = walk(value, path ? `${path}.${key}` : key)
+      const mappedError = Object.entries(error).reduce<Errors>(
+        (acc, [key, value]) => {
+          const { error: newError } = walk(value, path ? `${path}.${key}` : key)
 
-        return {
-          ...acc,
-          [key]: newError
-        }
-      }, {} as Errors)
+          return {
+            ...acc,
+            [key]: newError
+          }
+        },
+        {} as Errors
+      )
 
       return { error: mappedError, path }
     }
