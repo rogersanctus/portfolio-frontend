@@ -5,6 +5,11 @@ import { getIp } from '@src/lib/helper'
 
 export const onRequest = defineMiddleware(async (context, next) => {
   const url = context.url
+
+  if (context.request.method !== 'GET' || url.pathname.startsWith('/api/')) {
+    return next()
+  }
+
   let lang = url.searchParams.get('lang')
   const ip = getIp(context.request) ?? context.clientAddress
 
