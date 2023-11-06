@@ -57,7 +57,6 @@ export async function getLanguageByIp(ip: string): Promise<Language> {
   try {
     const resp = await fetch('https://ip2c.org/' + ip)
     const data = await resp.text()
-    console.log('ip2c response: ', data)
 
     if (data.startsWith('0;')) {
       return defaultLanguage
@@ -80,7 +79,6 @@ export function useLocale(lang: Language) {
   const translation = locales[lang]
 
   return function t(key: string, namespace?: string) {
-    console.log('translation: ', translation, namespace, key)
     namespace = namespace ?? 'common'
     const namespaceTranslation = translation[namespace]
 
