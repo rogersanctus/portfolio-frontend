@@ -1,9 +1,5 @@
 import type { APIContext } from 'astro'
 
-export async function GET({ request: _request }: APIContext) {
-  return new Response(JSON.stringify({ message: 'Hello from Astro' }), {})
-}
-
 export async function POST({ request, cookies }: APIContext) {
   const reqHeaders = new Headers()
   const cookie = request.headers.get('cookie') ?? ''
