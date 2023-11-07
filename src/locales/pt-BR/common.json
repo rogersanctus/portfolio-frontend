@@ -1,4 +1,7 @@
 {
   "Hello": "Olá",
-  "I am": "sou"
+  "I am": "sou",
+  "homepage": "Página inicial",
+  "contact": "Contato",
+  "success": "Sucesso"
 }
