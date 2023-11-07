@@ -1,8 +1,10 @@
 ---
 import Layout from './Layout.astro'
+import Breadcrumb from '@src/components/Breadcrumb.astro'
 ---
 
 <Layout title='Rogério Ferreira - Contato'>
+  <Breadcrumb url={Astro.url} />
   <main class='h-screen overflow-x-hidden overflow-y-auto flex flex-col'>
     <slot />
   </main>
