@@ -1,10 +1,11 @@
 ---
+import { getLanguage, useLocale } from '@src/lib/i18n'
 import ContactLayout from '../../layouts/ContactLayout.astro'
 
 const formSuccess = Astro.cookies.get('form-success')
 
 if (!formSuccess || formSuccess.value !== 'true') {
-  return Astro.redirect('/contact')
+  // return Astro.redirect('/contact')
 }
 
 Astro.cookies.delete('form-success', { path: '/' })
@@ -14,10 +15,13 @@ const params = Astro.url.searchParams
 const fullName = params.get('full_name')
 const email = params.get('email')
 const cellphone = params.get('cellphone')
+
+const lang = getLanguage(Astro.url)
+const t = useLocale(lang)
 ---
 
-<ContactLayout>
-  <main
+<ContactLayout title={t('success')}>
+  <div
     class='flex flex-col items-start xs:items-center justify-center text-left xs:text-center h-screen p-8 xs:p-12'
   >
     <h1 class='text-4xl text-green-600 font-bold mb-12'>
@@ -52,5 +56,5 @@ const cellphone = params.get('cellphone')
         )
       }
     </p>
-  </main>
+  </div>
 </ContactLayout>
