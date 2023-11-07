@@ -9,7 +9,7 @@ const about = await getCollection('about')
 const lang = getLanguage(Astro.url)
 const paragraphs = about
   .map((entry) => {
-    const parts = entry.slug.split('/')
+    const parts = entry.id.replace(/\..+$/, '').split('/')
     const entryLang = parts[0]
     parts.splice(0, 1)
     const key = parts[0].replace(/-/g, '')
