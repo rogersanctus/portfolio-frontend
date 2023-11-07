@@ -8,15 +8,14 @@ COPY ./package.json ./
 
 FROM deps as prod-deps
 
-RUN npm i --production
+RUN npm i --omit=dev
 
 FROM deps as build-deps
 
-RUN npm i --production=false
+RUN npm i
 
 FROM build-deps AS builder
 
-COPY ./.astro ./.astro
 COPY ./.env.production ./
 COPY ./astro.config.mjs ./
 COPY ./tailwind.config.mjs ./
