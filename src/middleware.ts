@@ -15,7 +15,8 @@ export const onRequest = defineMiddleware(async (context, next) => {
 
   if (!lang) {
     lang = await getLanguageByIp(ip)
-    return context.redirect(`${url.pathname}?lang=${lang}`)
+    url.searchParams.set('lang', lang)
+    return context.redirect(`${url.pathname}${url.search}`)
   }
 
   return next()
