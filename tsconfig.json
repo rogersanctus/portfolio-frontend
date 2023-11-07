@@ -2,7 +2,7 @@
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
     "allowJs": true,
-    "baseUrl": "/home/rogerio/projetos/supra-dev/portfolio/portfolio-frontend",
+    "baseUrl": ".",
     "paths": {
       "@src/*": [
         "src/*"
