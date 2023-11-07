@@ -1,11 +1,17 @@
 ---
 import Layout from './Layout.astro'
 import Breadcrumb from '@src/components/Breadcrumb.astro'
+
+interface Props {
+  title: string
+}
+
+const { title } = Astro.props
 ---
 
-<Layout title='Rogério Ferreira - Contato'>
-  <Breadcrumb url={Astro.url} />
+<Layout title={`Rogério Ferreira - ${title}`}>
   <main class='h-screen overflow-x-hidden overflow-y-auto flex flex-col'>
+    <Breadcrumb url={Astro.url} />
     <slot />
   </main>
 </Layout>
