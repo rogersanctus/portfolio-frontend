@@ -2,7 +2,7 @@
 import { Image } from 'astro:assets'
 
 import { getCollection } from 'astro:content'
-import { getLanguage, useLocale } from '@src/lib/i18n'
+import { defaultLanguage, getLanguage, useLocale } from '@src/lib/i18n'
 
 const about = await getCollection('about')
 
@@ -33,7 +33,7 @@ const paragraphs = about
   )
 
 const { paragraph1, paragraph2, paragraph3 } =
-  lang in paragraphs ? paragraphs[lang] : paragraphs['en']
+  lang in paragraphs ? paragraphs[lang] : paragraphs[defaultLanguage]
 const t = useLocale(lang)
 ---
 
