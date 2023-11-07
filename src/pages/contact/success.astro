@@ -5,7 +5,7 @@ import ContactLayout from '../../layouts/ContactLayout.astro'
 const formSuccess = Astro.cookies.get('form-success')
 
 if (!formSuccess || formSuccess.value !== 'true') {
-  // return Astro.redirect('/contact')
+  return Astro.redirect('/contact')
 }
 
 Astro.cookies.delete('form-success', { path: '/' })
