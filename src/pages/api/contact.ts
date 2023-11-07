@@ -1,6 +1,12 @@
 import type { APIContext } from 'astro'
 
+const API_URL = import.meta.env.API_URL
+
 export async function POST({ request, cookies }: APIContext) {
+  if (!API_URL) {
+    return new Response('API_URL is not defined', { status: 500 })
+  }
+
   const reqHeaders = new Headers()
   const cookie = request.headers.get('cookie') ?? ''
   const tokenCookie = cookies.get('signed-token')
@@ -11,7 +17,7 @@ export async function POST({ request, cookies }: APIContext) {
   const data = await request.json()
 
   try {
-    const resp = await fetch('http://localhost:4000/api/contact', {
+    const resp = await fetch(API_URL + '/contact', {
       credentials: 'include',
       headers: reqHeaders,
       method: 'POST',

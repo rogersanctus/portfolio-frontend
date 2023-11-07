@@ -6,7 +6,13 @@ import { getLanguage, useLocale } from '@src/lib/i18n'
 const lang = getLanguage(Astro.url)
 const t = useLocale(lang)
 
+const API_URL = import.meta.env.API_URL
+
 try {
+  if (!API_URL) {
+    throw new Error('API_URL is not defined')
+  }
+
   const headers = new Headers()
   const request = Astro.request
   const cookieRequest = request.headers.get('cookie')
@@ -15,7 +21,7 @@ try {
     headers.set('cookie', cookieRequest)
   }
 
-  const resp = await fetch('http://localhost:4000/api/contact', {
+  const resp = await fetch(API_URL + '/contact', {
     credentials: 'include',
     headers: headers
   })
