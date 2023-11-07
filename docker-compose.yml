@@ -1,0 +1,6 @@
+services:
+  landing-page-app:
+    image: landing-page
+    build: .
+    ports:
+      - 5000:5000
