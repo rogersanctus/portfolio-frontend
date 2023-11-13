@@ -42,9 +42,10 @@ type OnChangeCallback = (event: ChangeEvent) => void
 
 interface ContactFormProps {
   lang: Language
+  apiError: string | null
 }
 
-export function ContactForm({ lang }: ContactFormProps) {
+export function ContactForm({ lang, apiError }: ContactFormProps) {
   const t = useLocale(lang)
 
   const {
@@ -237,6 +238,14 @@ export function ContactForm({ lang }: ContactFormProps) {
   useEffect(() => {
     const storageFormData = localStorage.getItem('form-data')
 
+    if (apiError !== null) {
+      setCallout({
+        type: 'error',
+        message: t(apiError, 'contact.page')
+      })
+      return
+    }
+
     if (storageFormData) {
       const formData = JSON.parse(storageFormData)
 
@@ -252,9 +261,9 @@ export function ContactForm({ lang }: ContactFormProps) {
           'contact.page'
         )
       })
-
-      return () => {}
     }
+
+    return () => {}
   }, [reset])
 
   useEffect(() => {

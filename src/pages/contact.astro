@@ -7,6 +7,8 @@ const lang = getLanguage(Astro.url)
 const t = useLocale(lang)
 
 const API_URL = import.meta.env.API_URL
+let fetchError: string[] | null = null
+let apiError: string | null = null
 
 try {
   if (!API_URL) {
@@ -46,8 +48,20 @@ try {
 
       Astro.response.headers.append('set-cookie', set_cookies)
     }
+  } else if (resp.status === 500) {
+    apiError = t(
+      'An internal server error occurred. Please contact me, by email or by my phone on the main page, about what happened or try again later.',
+      'contact.page'
+    )
+  } else {
+    const error = await resp.json()
+    console.error(error)
   }
 } catch (error) {
+  fetchError = [
+    t('Server is not responding.', 'contact.page'),
+    t('Please try again later.', 'contact.page')
+  ]
   console.error(error)
 }
 ---
@@ -59,18 +73,28 @@ try {
     <div
       class='w-full sm:w-auto p-4 sm:p-14 flex flex-col flex-1 justify-center border border-gray-50 bg-slate-200'
     >
-      <h1 class='text-2xl sm:text-4xl font-semibold text-gray-800 text-center'>
-        {t('Talk to me', 'contact.page')}
-      </h1>
-      <p class='text-xl sm:text-2xl text-center text-slate-600 mt-2 mb-12'>
-        {
-          t(
-            'Ask questions, send proposals, suggestions or request a quote.',
-            'contact.page'
-          )
-        }
-      </p>
-      <ContactForm client:load lang={lang} />
+      {
+        fetchError ? (
+          <div class='text-2xl sm:text-3xl text-center font-semibold text-rose-600 mx-0 sm:mx-12 w-auto md:w-[800px]'>
+            {fetchError.map((error) => (
+              <p>{error}</p>
+            ))}
+          </div>
+        ) : (
+          <>
+            <h1 class='text-2xl sm:text-4xl font-semibold text-gray-800 text-center'>
+              {t('Talk to me', 'contact.page')}
+            </h1>
+            <p class='text-xl sm:text-2xl text-center text-slate-600 mt-2 mb-12'>
+              {t(
+                'Ask questions, send proposals, suggestions or request a quote.',
+                'contact.page'
+              )}
+            </p>
+            <ContactForm client:load lang={lang} apiError={apiError} />
+          </>
+        )
+      }
     </div>
   </div>
 </ContactLayout>
