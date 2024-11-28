@@ -104,6 +104,10 @@ export function PageHeader({ lang }: PageHeaderProps) {
             />
             {/*<MenuItem name={t('Frequently Asked Questions', 'page_header')} section="faq" />*/}
             <MenuItem name={t('Contact', 'page_header')} section='contact' />
+            <MenuItem
+              name={t('Blog', 'page_header')}
+              url='https://blog.rogerioferreira.me'
+            />
           </ul>
         </nav>
       </header>
