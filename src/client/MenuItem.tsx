@@ -1,13 +1,20 @@
 interface Props {
-  section: string
+  section?: string
+  url?: string
   name: string
 }
 
-export function MenuItem({ section, name }: Props) {
+export function MenuItem({ section, url, name }: Props) {
+  let href = url
+
+  if (section) {
+    href = `#${section}`
+  }
+
   return (
     <li className='text-md font-semibold fitmenu:text-lg uppercase'>
       <a
-        href={`#${section}`}
+        href={href}
         className='flex flex-col items-center fitmenu:static relative'
       >
         <span className='fitmenu:z-auto z-10 whitespace-nowrap fitmenu:p-0 p-2'>
